@@ -1,0 +1,30 @@
+{
+  "capabilities":
+      [
+        {
+          "browserName": "firefox",
+          "maxInstances": 5,
+          "seleniumProtocol": "WebDriver"
+        },
+        {
+          "browserName": "chrome",
+          "maxInstances": 3,
+          "seleniumProtocol": "WebDriver"
+        },
+        {
+          "browserName": "internet explorer",
+          "maxInstances": 2,
+          "seleniumProtocol": "WebDriver"
+        }
+      ],
+  "configuration":
+  {
+		"port":5555,
+		  "hubPort":4444, 
+		  "hubHost":"10.13.13.152", 
+		  "nodePolling":2000, 
+		  "registerCycle":10000,
+		  "register":true,
+		  "maxSession":3
+  }
+}

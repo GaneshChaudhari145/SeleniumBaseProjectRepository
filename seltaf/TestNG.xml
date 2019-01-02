@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="false">
+	<parameter name="browsername" value="chrome" />
+	<parameter name="browserversion" value="6" />
+	<parameter name="platform" value="windows" />
+	<test verbose="2" name="Chrome">
+		<packages>
+			<package name="com.aqm.staf.framework.*" />
+			<package name="com.aqm.tests.*" />
+		</packages>
+		
+		<method-selectors>
+			<method-selector>
+				<script language="beanshell"><![CDATA[
+         			groups.containsKey("functional")
+       			]]></script>
+			</method-selector>
+		</method-selectors>
+	</test>
+</suite>

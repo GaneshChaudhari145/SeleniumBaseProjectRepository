@@ -1,0 +1,6 @@
+syntax: glob
+.metadata
+seltaf/test-output
+seltaf/target
+seltaf/bin
+.recommenders

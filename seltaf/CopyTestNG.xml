@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Suite" parallel="false">
+  <test name="Test">
+    <classes>
+      <class name="com.aqm.staf.framework.FrameworkServices"/>
+      <class name="com.aqm.tests.AutomationDriverScript"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

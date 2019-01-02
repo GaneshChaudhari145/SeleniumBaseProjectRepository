@@ -1,0 +1,93 @@
+<project name="TestNGTest" basedir=".">
+	<property name="classes.dir" value="bin"/>
+	<property name="src.dir" value="src"/>
+	<property name="lib.dir" value="libs"/>
+	<property name="report.dir" value="D:\ExecutionResultsSummary"/>
+	<property environment="env" />
+	
+	<path id="libs">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${env.M2_HOME}\.m2\repository">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement path="${basedir}/${classes.dir}"/>
+	</path>
+	
+	<target name="createExecutionFolder">
+		<echo>Creating Execution Folder</echo>
+		<tstamp>
+			<format property="TODAY_UK" pattern="yyyy_MM_dd_HH_mm_ss_zzz" locale="cn,CN"/>
+	    </tstamp>
+		
+		<property name="currentExecutionResults" value="${report.dir}/ExecutionResults_${TODAY_UK}" />
+		<delete dir="${currentExecutionResults}" /> <mkdir dir="${currentExecutionResults}" />
+	</target>
+
+	<!-- Delete old data and create new directories -->
+	<target name="init" depends="createExecutionFolder">
+		<echo>Initlizing...</echo>
+		<delete dir="${classes.dir}"/> <mkdir dir="${classes.dir}"/>
+	    
+		<tstamp>
+			<format property="TODAY_UK" pattern="yyyy_MM_dd_HH_mm_ss_zzz" locale="cn,CN"/>
+	    </tstamp>
+		
+		<property name="currentExecutionResults" value="${report.dir}/ExecutionResults_${TODAY_UK}" />
+		<delete dir="${currentExecutionResults}" /> <mkdir dir="${currentExecutionResults}" />
+
+		<property name="TestNGResults" value="${currentExecutionResults}/TestNG" />
+		<delete dir="${TestNGResults}" /> <mkdir dir="${TestNGResults}" />
+
+		<property name="FrameworkResults" value="${currentExecutionResults}/FrameworkResults" />
+		<delete dir="${FrameworkResults}" /> <mkdir dir="${FrameworkResults}" />
+		
+		<copy todir="${classes.dir}" file="${src.dir}/hibernateTestData.cfg.xml"/>
+		<copy todir="${classes.dir}" file="${src.dir}/hibernateTestManager.cfg.xml"/>
+		<copy todir="${classes.dir}" file="${basedir}/config.properties"/>
+		<copy todir="${classes.dir}" file="${basedir}/tableconfig.properties"/>
+		<copy todir="${classes.dir}" file="${basedir}/sqljdbc_auth.dll"/>
+	
+		<delete dir="${classes.dir}/hbms" /> <mkdir dir="${classes.dir}/hbms" />
+		<!-- <copy todir="${classes.dir}/hbms" file="${basedir}/hbms/*.xml"/> -->
+		<copy todir="${classes.dir}/hbms" >  
+			<fileset dir="${basedir}/hbms" includes="**"/>  
+		</copy>
+	</target>
+	
+	<!-- Complies the java files -->
+	<target name="compile" depends="init">
+		<echo>Compiling...</echo>
+		<javac debug="true" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="libs"/>
+	</target>
+
+	<!-- <target name="runTests" description="Running tests" depends="compile">
+		<echo>Running Tests...</echo>
+		<taskdef resource="testngtasks" classpathref="libs"/>
+		<testng outputDir="${TestNGResults}" haltonfailure="false" classpathref="libs" verbose="0"
+			listeners="org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter">
+	        <xmlfileset dir="${basedir}" includes="TestNG.xml" /> 			
+			<jvmarg value="-Xmx512m"/>
+		</testng>
+	</target> -->
+	
+	<target name="runTests" description="Running tests" depends="compile">
+		<echo>Running Tests...</echo>
+		<java  dir="${basedir}\${classes.dir}" fork="true" failonerror="yes" classname="com.aqm.TestLauncher"  classpathref="libs">
+		</java>
+				
+		<!-- 
+		<taskdef resource="testngtasks" classpathref="libs"/>		
+		<testng outputDir="${TestNGResults}" haltonfailure="false" classpathref="libs" verbose="0"
+			listeners="org.uncommons.reportng.HTMLReporter,org.uncommons.reportng.JUnitXMLReporter">
+	        <xmlfileset dir="${basedir}" includes="TestNG.xml" /> 			
+			<jvmarg value="-Xmx512m"/>
+		</testng>--> 
+	</target>
+	
+	<target name="CompleteSmokeSuite">
+		<antcall target="runTests"/>
+	</target>
+</project>
+

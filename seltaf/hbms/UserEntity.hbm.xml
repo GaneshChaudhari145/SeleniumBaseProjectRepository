@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+	<class abstract="false" name="com.aqm.staf.library.databin.UserEntity" table="UserEntity">
+		<id name="Reference" column="Reference" type="string">
+		</id>
+		<property name="TestScenario" column="TestScenario" type="string" />
+		<property name="RowNumber" column="RowNumber" type="integer" />
+		<property name="Action" column="Action" type="string" />
+		<property name="StepGroup" column="StepGroup" type="string" />
+		<property name="ParentKey" column="ParentKey" type="string" />
+		<property name="ChildKey" column="ChildKey" type="string" />
+		<property name="ConfigExecute" column="ConfigExecute" type="string" />
+		<dynamic-component insert="true" name="customProperties" optimistic-lock="true" unique="false" update="true">
+			<property name="ConfigAdd" column="ConfigAdd" type="boolean" />
+			<property name="ConfigEssRole" column="ConfigEssRole" type="boolean" />
+			<property name="EssRole" column="EssRole" type="string" />
+			<property name="ConfigSuperviserRole" column="ConfigSuperviserRole" type="boolean" />
+			<property name="SuperviserRole" column="SuperviserRole" type="string" />
+			<property name="ConfigAdminRole" column="ConfigAdminRole" type="boolean" />
+			<property name="AdminRole" column="AdminRole" type="string" />
+			<property name="ConfigEmployeeName" column="ConfigEmployeeName" type="boolean" />
+			<property name="EmployeeName" column="EmployeeName" type="string" />
+			<property name="ConfigUserName" column="ConfigUserName" type="boolean" />
+			<property name="UserName" column="UserName" type="string" />
+			<property name="ConfigStatus" column="ConfigStatus" type="boolean" />
+			<property name="Status" column="Status" type="string" />
+			<property name="ConfigPassword" column="ConfigPassword" type="boolean" />
+			<property name="Password" column="Password" type="string" />
+			<property name="ConfigConfirmPassword" column="ConfigConfirmPassword" type="boolean" />
+			<property name="ConfirmPassword" column="ConfirmPassword" type="string" />
+			<property name="ConfigSave" column="ConfigSave" type="boolean" />
+		</dynamic-component>
+	</class>
+</hibernate-mapping>
